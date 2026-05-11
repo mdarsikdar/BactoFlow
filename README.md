@@ -120,10 +120,7 @@ bash RUN_PIPELINE.sh --list-steps
 | 8 | Prokka | Functional gene annotation |
 | 9 | MLST + ABRicate + PADLOC + PhiSpy | Downstream genomic analysis |
 | 10 | summarize_results.py | Generate verification report |
-| 11 | generate_workflow_figures.py | Assembly & annotation figures |
-| 12 | generate_mapping_vcf_figures.py | Mapping & variant figures |
-| 13 | generate_advanced_figures.py | AMR & defense system figures |
-| 14 | generate_workflow_diagram.py | Pipeline workflow diagram |
+| 11 | Visualization Pipeline | 6 Key figures (Workflow + AMR + Mapping + Virulence + Phage + Defense) |
 
 ---
 
@@ -155,7 +152,7 @@ BactoFlow/
 │   ├── upstream/                # Steps 00–08
 │   ├── downstream/              # Step 09
 │   └── utils/                   # Helper Python scripts
-├── visualization/               # Figure generation scripts (Steps 11–14)
+├── visualization/               # Figure generation scripts (Step 11)
 └── results/                     # All outputs (git-ignored except structure)
     ├── .checkpoints/            # Step completion markers
     ├── figures/                 # Generated PNG figures
@@ -184,7 +181,7 @@ bash scripts/upstream/06_assembly.sh
 bash scripts/downstream/09_run_downstream_analysis.sh
 
 # Generate figures only
-python visualization/generate_advanced_figures.py
+python visualization/generate_amr_heatmap.py
 ```
 
 All scripts auto-detect the project root from their own location.
@@ -208,7 +205,7 @@ All scripts auto-detect the project root from their own location.
 | PADLOC | `results/downstream/padloc/` |
 | PhiSpy | `results/downstream/phispy/` |
 | Summary report | `results/downstream/downstream_verification_report.txt` |
-| Figures | `results/figures/figure[0-8]_*.png` |
+| Figures | `results/figures/figure0[1-6]_*.png` |
 | Pipeline log | `results/pipeline.log` |
 
 ---

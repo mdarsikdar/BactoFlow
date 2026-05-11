@@ -114,4 +114,4 @@ def generate_perfect_workflow(output_path):
 
 if __name__ == "__main__":
     os.makedirs("results/figures", exist_ok=True)
-    generate_perfect_workflow("results/figures/figure0_workflow_diagram.png")
+    generate_perfect_workflow("results/figures/figure01_workflow_diagram.png")

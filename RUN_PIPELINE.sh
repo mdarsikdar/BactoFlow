@@ -22,6 +22,7 @@
 #   8  - Prokka Annotation
 #   9  - Downstream Analysis (MLST, ABRicate, PADLOC, PhiSpy)
 #   10 - Summarize Results
+#   11 - Visualization Pipeline (6 Key Figures)
 # ==============================================================================
 
 set -euo pipefail
@@ -75,6 +76,7 @@ while [[ "$#" -gt 0 ]]; do
             echo "  8  Prokka Annotation"
             echo "  9  Downstream Analysis (MLST/ABRicate/PADLOC/PhiSpy)"
             echo " 10  Summarize Results"
+            echo " 11  Visualization Pipeline"
             exit 0
             ;;
         *)
@@ -156,6 +158,29 @@ run_step 7  "QUAST Assessment"            bash "$UPSTREAM_DIR/07_quast.sh"
 run_step 8  "Prokka Annotation"           bash "$UPSTREAM_DIR/08_prokka.sh"
 run_step 9  "Downstream Analysis"         bash "$DOWNSTREAM_DIR/09_run_downstream_analysis.sh"
 run_step 10 "Summarize Results"           python "$UTILS_DIR/summarize_results.py"
+
+# ── Visualization Pipeline (6 Figures) ─────────────────────────────────────────
+run_visualization_pipeline() {
+    log "  Generating Workflow Diagram (Figure 0)..."
+    python "$VIS_DIR/generate_workflow_diagram.py"
+    
+    log "  Generating AMR Heatmap (Figure 9)..."
+    python "$VIS_DIR/generate_amr_heatmap.py"
+    
+    log "  Generating Mapping Coverage (Figure 10)..."
+    python "$VIS_DIR/generate_mapping_coverage_figures.py"
+    
+    log "  Generating Virulence Heatmap (Figure 11)..."
+    python "$VIS_DIR/generate_virulence_heatmap.py"
+    
+    log "  Generating Prophage Map (Figure 12)..."
+    python "$VIS_DIR/generate_prophage_visual.py"
+    
+    log "  Generating PADLOC Systems (Figure 13)..."
+    python "$VIS_DIR/generate_padloc_visual.py"
+}
+
+run_step 11 "Visualization Pipeline" run_visualization_pipeline
 
 log "================================================================"
 log "  Pipeline Execution Complete!"
